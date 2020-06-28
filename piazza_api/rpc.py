@@ -393,6 +393,52 @@ class PiazzaRPC(object):
         )
         return self._handle_error(r, "Could not retrieve stats for class.")
 
+    def set_jobs(self, jobs):
+        """Set jobs for the current user
+        :type  jobs: list
+        :param jobs: The jobs to be set
+        """
+        data = {"set": {"work_experience": jobs}}
+        r = self.request(method="user_profile.update_profile", data=data)
+        return self._handle_error(r, "Failed to set jobs.")
+
+    def set_projects(self, projects):
+        """Set projects for the current user
+        :type  projects: str
+        :param projects: A description of the user's projects
+        """
+        data = {"set": {"projects": projects}}
+        r = self.request(method="user_profile.update_profile", data=data)
+        return self._handle_error(r, "Failed to set projects.")
+
+    def set_links(self,
+                  github=None,
+                  stackoverflow=None,
+                  website=None,
+                  linkedin=None):
+        """Set links for the current user
+        :type  github: str
+        :param github: The user's github link
+        :type  stackoverflow: str
+        :param stackoverflow: The user's stackoverflow link
+        :type  website: str
+        :param website: The user's website link
+        :type  linkedin: str
+        :param linkedin: The user's linkedin link
+        """
+        data = {
+            "set": {
+                "links": {
+                    "github": github,
+                    "stackoverflow": stackoverflow,
+                    "website": website,
+                    "linkedin": linkedin,
+                }
+            }
+        }
+        r = self.request(method="user_profile.update_profile", data=data)
+        return self._handle_error(r, "Failed to set links.")
+
     def get_user_profile(self):
         """Get profile of the current user"""
         r = self.request(method="user_profile.get_profile")
